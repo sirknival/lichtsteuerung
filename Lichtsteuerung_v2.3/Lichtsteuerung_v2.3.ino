@@ -86,12 +86,14 @@ const int PotPin[] = { A3, A2, A0 };     //Pins addressed
 
 //Actuator-pins:
 const int LedPin[] = { 5, 9, 6, 11, 10, 3 }; //Pins addressed
+const int VentPin = A1;
 
 //Light states
 byte ActualLightState[] = {  0, 0, 0, 0, 0, 0 };//current light values [0...255], at end of loop used for light controll
 byte ModeLightState[] = { 0, 0, 0, 0, 0, 0 };   //light values of Mode-Btn [0...255]
 byte MinLightState = 0;                         //min light values [0...255]
 byte MaxLightState = 255;                       //max light values[0...255]
+
 
 //Potentiometers
 const byte UpperTolerance = 16;           //for Potentiometer
@@ -133,6 +135,7 @@ void setup() {
   for (int ThisPin = 0; ThisPin < 6; ThisPin++) {
     pinMode(LedPin[ThisPin], OUTPUT);
   }
+  pinMode(VentPin, OUTPUT);
 
   //Loading light states from EEPROM
   for (int ThisPin = 0; ThisPin < 6; ThisPin++) {
@@ -293,8 +296,13 @@ void loop() {
       EEPROM.update(ThisPin, ActualLightState[ThisPin]);
     }
     if (ActualLightState[0] == 0 && ActualLightState[1] == 0 && ActualLightState[2] == 0 &&
-        ActualLightState[3] == 0 && ActualLightState[4] == 0 && ActualLightState[5] == 0)
+        ActualLightState[3] == 0 && ActualLightState[4] == 0 && ActualLightState[5] == 0) {
       LockFlagLight = true;
+      digitalWrite(VentPin, LOW);          
+    }
+    else {
+      digitalWrite(VentPin, HIGH);
+    }
     ActualLightStateChanged = LOW;
   }
 }
