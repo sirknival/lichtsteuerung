@@ -4,7 +4,7 @@
   Based on the concept of @Daniel Schnitzer
   Developed and extended by @Florian Langer
   Purpose: Controll lights in RaRo-Heim
-  Version Nr.: 2.3.2
+  Version Nr.: 3.1.0
   Last Update date: 17.04.2018
   _______________Features_______________
 
